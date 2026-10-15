@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Latence</title>
+    <title>Test Rapidité connection</title>
     <style>
         body {
             background-color: #000;
@@ -28,16 +28,15 @@
 <body>
 
     <div id="result">
-        <div class="label">Latence (ms)</div>
+        <div class="label">Réponse</div>
         <span id="ms-val">Calcul...</span>
     </div>
 
     <script>
         async function testSpeed() {
-            const start = performance.now(); // Début du chronomètre
+            const start = performance.now();
             
             try {
-                // On charge une image minuscule depuis Cloudflare (CDN ultra-rapide)
                 await fetch('https://www.cloudflare.com/cdn-cgi/trace');
                 
                 const end = performance.now();
@@ -45,9 +44,8 @@
                 
                 document.getElementById('ms-val').innerText = latency + "/ms";
                 
-                // Couleur selon la vitesse
                 if(latency < 50) document.body.style.color = "#FFF";
-                else if(latency < 150) document.body.style.color = "#ff0";
+                else if(latency < 150) document.body.style.color = "#ff0"; document.
                 else document.body.style.color = "#f00";
 
             } catch (e) {
