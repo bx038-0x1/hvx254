@@ -30,11 +30,14 @@
     <div id="result">
         <div class="label">Temp de réponse</div>
         <span id="ms-val">Calcul en cours...</span>
+        <br>
+            <br>
+                <div style="border: 2px white; border-radius: 6px; color: white; padding: 10px 19px; overflow-y: auto;"><code id="log"></code></div>
     </div>
-    <br>
-    <div style="border: 2px white; border-radius: 6px; color: white; padding: 10px 19px; overflow-y: auto;"><code id="log"></code></div>
+    
 
     <script>
+    let log = document.getElementById("log");
         async function testSpeed() {
             const start = performance.now();
             
@@ -44,7 +47,7 @@
                 const end = performance.now();
                 const latency = Math.round(end - start);
                 
-                document.getElementById('log').innerHTML += latency + "/ms";
+                log.innerHTML += latency + "/ms";
                 document.getElementById('ms-val').innerText = latency + "/ms";
                 
                 if(latency < 50) document.body.style.color = "#FFF";
