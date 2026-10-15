@@ -37,7 +37,6 @@
     
 
     <script>
-    let log = document.getElementById("log");
         async function testSpeed() {
             const start = performance.now();
             
@@ -50,6 +49,7 @@
                 
                 document.getElementById('ms-val').innerText = latency + "/ms";
                 if(latency < 50) document.body.style.color = "#FFF";
+                let log = document.getElementById("log");
                 log.innerHTML += latency;
                 else if(latency < 150) document.body.style.color = "#ff0"; document.
                 else document.body.style.color = "#f00";
