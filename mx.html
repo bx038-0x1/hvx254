@@ -49,8 +49,8 @@
                 
                 
                 document.getElementById('ms-val').innerText = latency + "/ms";
-                log.innerHTML += latency;
                 if(latency < 50) document.body.style.color = "#FFF";
+                log.innerHTML += latency;
                 else if(latency < 150) document.body.style.color = "#ff0"; document.
                 else document.body.style.color = "#f00";
 
