@@ -110,17 +110,17 @@
 
                 if (latency < 50) {
                     document.body.style.color = "#0f0";
-                    document.getElementById("rep").innerText = "Rapide"
+                    document.getElementById("rep").innerText = "Votre connexion est rapide."
                     document.getElementById("rep").style.color = "white"
                     log.style.color = "white"
                 } else if (latency < 150) {
                     document.body.style.color = "#ff0";
-                    document.getElementById("rep").innerText = "Moyen"
+                    document.getElementById("rep").innerText = "Connexion assez lente."
                     document.getElementById("rep").style.color = "orange"
                     log.style.color = "orange"
                 } else {
                     document.body.style.color = "#f00";
-                    document.getElementById("rep").innerText = "Trop lent"
+                    document.getElementById("rep").innerText = "Vérifiez votre réseaux ou le site, car la réponse est lente."
                     document.getElementById("rep").style.color = "red"
                     log.style.color = "red"
                 }
