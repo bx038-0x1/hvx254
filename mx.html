@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Rapidité connection</title>
+    <title>Test Rapidité Connexion</title>
+
     <style>
         body {
             background-color: #000;
@@ -15,47 +16,74 @@
             height: 100vh;
             margin: 0;
         }
+
         #result {
             font-size: 3rem;
             text-align: center;
         }
+
         .label {
             font-size: 1rem;
-            color: #333;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .cn {
+            color: white;
+            overflow-x: auto;
+            padding: 10px 19px;
+            border: solid 2px white;
+            border-radius: 4px;
+            margin-top: 20px;
+            max-width: 80vw;
+            font-size: 1rem;
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
 
     <div id="result">
-        <div class="label">Temp de réponse</div>
+        <div class="label">Temps de réponse</div>
         <span id="ms-val">Calcul en cours...</span>
+        <div class="cn">
+            <span id="log"></span>
+        </div>
     </div>
-    
 
     <script>
         async function testSpeed() {
             const start = performance.now();
-            
+
             try {
-                await fetch('https://www.cloudflare.com/cdn-cgi/trace');
-                
+                await fetch("https://www.cloudflare.com/cdn-cgi/trace", {
+                    cache: "no-store"
+                });
+
                 const end = performance.now();
                 const latency = Math.round(end - start);
-                
-                
-                document.getElementById('ms-val').innerText = latency + "/ms";
-                if(latency < 50) document.body.style.color = "#FFF";
-                else if(latency < 150) document.body.style.color = "#ff0"; document.
-                else document.body.style.color = "#f00";
+
+                document.getElementById("ms-val").innerText =
+                    `${latency} ms`;
+
+                const log = document.getElementById("log");
+                log.innerHTML += `${latency}ms `;
+
+                if (latency < 50) {
+                    document.body.style.color = "#0f0";
+                } else if (latency < 150) {
+                    document.body.style.color = "#ff0";
+                } else {
+                    document.body.style.color = "#f00";
+                }
 
             } catch (e) {
-                document.getElementById('ms-val').innerText = "Erreur";
+                document.getElementById("ms-val").innerText = "Erreur";
+                console.error(e);
             }
         }
-        testSpeed();
 
-        
+        testSpeed();
         setInterval(testSpeed, 500);
     </script>
 
