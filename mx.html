@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+    <meta charset="UTF-8">
+    <title>Test Vitesse</title>
 </head>
-
 <body>
-  <style>
-    body{
-      margin: 20;
-    }
-  </style>
-  <h2 id="pg"></h2>
-  <h2 id="x"></h2>
-  <script>
-    let pg = document.getElementById("pg");
-    let x = document.getElementById("x");
-    if('connection' in navigator){
-      pg.innerHTML = "Connexion: " + navigator.connection.rtt + "ms";
-      x.innerHTML = "Type: " + navigator.connection.effectiveType;
-      
-    }
-    else{
-      pg.innerHTML = "Verification..."
-    }
-  </script>
+    <h2 id="status">Vérification...</h2>
+    <h2 id="result"></h2>
+
+    <script>
+        let statusEl = document.getElementById("status");
+        let resultEl = document.getElementById("result");
+
+        function testSpeed() {
+            const start = performance.now();
+            // On charge une très petite image depuis un CDN rapide
+            fetch('https://www.google.com/favicon.ico')
+                .then(() => {
+                    const end = performance.now();
+                    const duration = end - start;
+                    
+                    if (duration < 100) {
+                        statusEl.innerHTML = "Connexion : 🟢 Très Rapide";
+                        resultEl.innerHTML = `Temps de réponse : ${Math.round(duration)} ms`;
+                    } else if (duration < 500) {
+                        statusEl.innerHTML = "Connexion : 🟡 Moyenne";
+                        resultEl.innerHTML = `Temps de réponse : ${Math.round(duration)} ms`;
+                    } else {
+                        statusEl.innerHTML = "Connexion : 🔴 Lente";
+                        resultEl.innerHTML = `Temps de réponse : ${Math.round(duration)} ms`;
+                    }
+                })
+                .catch(err => {
+                    statusEl.innerHTML = "Erreur de test";
+                    resultEl.innerHTML = err.message;
+                });
+        }
+
+        testSpeed();
+    </script>
 </body>
 </html>
