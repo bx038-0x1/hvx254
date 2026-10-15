@@ -1,43 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Test Vitesse</title>
-</head>
-<body>
-    <h2 id="status">Vérification...</h2>
-    <h2 id="result"></h2>
-
-    <script>
-        let statusEl = document.getElementById("status");
-        let resultEl = document.getElementById("result");
-
-        function testSpeed() {
-            const start = performance.now();
-            // On charge une très petite image depuis un CDN rapide
-            fetch('https://www.google.com/favicon.ico')
-                .then(() => {
-                    const end = performance.now();
-                    const duration = end - start;
-                    
-                    if (duration < 100) {
-                        statusEl.innerHTML = "Connexion : 🟢 Très Rapide";
-                        resultEl.innerHTML = `Temps de réponse : ${Math.round(duration)} ms`;
-                    } else if (duration < 500) {
-                        statusEl.innerHTML = "Connexion : 🟡 Moyenne";
-                        resultEl.innerHTML = `Temps de réponse : ${Math.round(duration)} ms`;
-                    } else {
-                        statusEl.innerHTML = "Connexion : 🔴 Lente";
-                        resultEl.innerHTML = `Temps de réponse : ${Math.round(duration)} ms`;
-                    }
-                })
-                .catch(err => {
-                    statusEl.innerHTML = "Erreur de test";
-                    resultEl.innerHTML = err.message;
-                });
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Connectivité Temps Réel</title>
+    <style>
+        /* --- STYLE MODERNE & DARK MODE --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
         }
 
-        testSpeed();
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .card {
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-align: center;
+            transition: transform 0.2s;
+            border-left: 5px solid #00ffcc;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #aaaaaa;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .unit {
+            font-size: 0.5em;
+            color: #777;
+        }
+
+        /* Indicateur de statut */
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .online { background-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .offline { background-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+
+        #loading-spinner {
+            display: none;
+            font-size: 0.8em;
+            color: #00ffcc;
+        }
+
+        /* Responsive mobile */
+        @media (max-width: 600px) {
+            .dashboard { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <!-- Carte 1: Latence Locale (Ping) -->
+        <div class="card">
+            <h3>Latence (Ping)</h3>
+            <div class="value" id="latency-val">-- <span class="unit">ms</span></div>
+            <div style="font-size: 0.8em; color: #666;">Serveur Cloudflare (CDN)</div>
+        </div>
+
+        <!-- Carte 2: Vitesse estimée -->
+        <div class="card">
+            <h3>Type de Connexion</h3>
+            <div class="value" id="conn-type">Analyse...</div>
+            <div id="loading-spinner">Calcul en cours...</div>
+        </div>
+
+        <!-- Carte 3: Infos IP (API Online) -->
+        <div class="card">
+            <h3>Adresse IP Publique</h3>
+            <div class="value" id="ip-val">--</div>
+            <div style="font-size: 0.8em; color: #666;" id="isp-val">Fournisseur: --</div>
+        </div>
+
+        <!-- Carte 4: Localisation -->
+        <div class="card">
+            <h3>Position</h3>
+            <div class="value" id="location-val">--</div>
+            <div style="font-size: 0.8em; color: #666;" id="country-val">Pays: --</div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const REFRESH_INTERVAL = 5000; // Rafraîchit toutes les 5 secondes
+        
+        // Éléments DOM
+        const elLatency = document.getElementById('latency-val');
+        const elConnType = document.getElementById('conn-type');
+        const elLoading = document.getElementById('loading-spinner');
+        const elIp = document.getElementById('ip-val');
+        const elIsp = document.getElementById('isp-val');
+        const elLocation = document.getElementById('location-val');
+        const elCountry = document.getElementById('country-val');
+
+        // Fonction principale de mise à jour
+        async function updateDashboard() {
+            // 1. MESURE LOCALE (Ping simulé vers Cloudflare)
+            measureLatency();
+
+            // 2. MESURE ONLINE (API IPInfo)
+            fetchOnlineData();
+        }
+
+        // Fonction A : Mesure locale du ping
+        function measureLatency() {
+            const startTime = performance.now();
+            
+            // On charge une petite image depuis Cloudflare (très rapide et fiable)
+            fetch('https://www.cloudflare-cdn.com/favicon.ico')
+                .then(() => {
+                    const endTime = performance.now();
+                    const latency = Math.round(endTime - startTime);
+                    
+                    // Affichage stylisé
+                    let color = '#00ff00';
+                    if(latency > 100) color = '#ffcc00';
+                    if(latency > 200) color = '#ff0000';
+                    
+                    elLatency.innerHTML = `${latency} <span class="unit">ms</span>`;
+                    elLatency.style.color = color;
+                })
+                .catch(err => {
+                    elLatency.innerHTML = "Erreur <span class='unit'>ms</span>";
+                    console.error("Ping failed", err);
+                });
+
+            // Détection du type de connexion (Fallback si navigator.connection manque)
+            if (navigator.connection) {
+                elConnType.innerText = navigator.connection.effectiveType.toUpperCase();
+            } else {
+                // Estimation basique basée sur la largeur d'écran et l'user agent
+                if (window.innerWidth < 768) {
+                    elConnType.innerText = "Mobile / Data probable";
+                } else {
+                    elConnType.innerText = "Desktop / Wi-Fi probable";
+                }
+            }
+        }
+
+        // Fonction B : Récupération API Online (ipapi.co)
+        async function fetchOnlineData() {
+            try {
+                // On utilise ipapi.co qui est gratuit et ne nécessite pas de clé pour un usage basique
+                const response = await fetch('https://ipapi.co/json/');
+                
+                if (!response.ok) throw new Error("API Error");
+                
+                const data = await response.json();
+
+                // Mise à jour du DOM
+                elIp.innerText = data.ip || "Inconnue";
+                elIsp.innerText = `Org: ${data.org || "Inconnu"}`;
+                elCountry.innerText = `Pays: ${data.country_name || "--"}`;
+                elLocation.innerText = `${data.city || "--"}, ${data.region || ""}`;
+
+            } catch (error) {
+                // Fallback si l'API coupe ou si hors ligne
+                console.warn("API Offline or Error", error);
+                elIp.innerText = "Hors Ligne / Blocage API";
+                elLocation.innerText = "--";
+            }
+        }
+
+        // Initialisation
+        updateDashboard();
+
+        // Boucle temps réel
+        setInterval(updateDashboard, REFRESH_INTERVAL);
+
     </script>
 </body>
 </html>
