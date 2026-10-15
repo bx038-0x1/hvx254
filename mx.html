@@ -28,9 +28,10 @@
 <body>
 
     <div id="result">
-        <div class="label">Réponse</div>
-        <span id="ms-val">Calcul...</span>
+        <div class="label">Temp de réponse</div>
+        <span id="ms-val">Calcul en cours...</span>
     </div>
+    <div style="border: 2px white; border-radius: 6px; color: white; padding: 10px 19px; overflow-y: auto;"><code id="log"></code></div>>
 
     <script>
         async function testSpeed() {
@@ -42,6 +43,7 @@
                 const end = performance.now();
                 const latency = Math.round(end - start);
                 
+                document.getElementById("log").innerText += latency + "/ms"
                 document.getElementById('ms-val').innerText = latency + "/ms";
                 
                 if(latency < 50) document.body.style.color = "#FFF";
@@ -52,12 +54,10 @@
                 document.getElementById('ms-val').innerText = "Erreur";
             }
         }
-
-        // Lance le test immédiatement
         testSpeed();
 
         
-        setInterval(testSpeed, 500);
+        setInterval(testSpeed, 200);
     </script>
 
 </body>
