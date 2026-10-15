@@ -136,11 +136,16 @@
                 document.getElementById("ms-val").innerText =
                     `${latency}/ms`;
                 const cn = document.getElementById("cn");
+                const cx = document.getElementById("cx");
                 const log = document.getElementById("log");
                 log.innerHTML += `${latency}/ms ${new Date().toLocaleTimeString()} ` + "<br>";
                 cn.scrollTo({
                     top:
                     cn.scrollHeight, behavior: "smooth"
+                });
+                cx.scrollTo({
+                    top:
+                    cx.scrollHeight, behavior: "smooth"
                 });
 
                 if (latency < 50) {
