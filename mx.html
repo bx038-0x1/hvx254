@@ -68,7 +68,7 @@
                     `${latency}/ms`;
                 const cn = document.getElementById("cn");
                 const log = document.getElementById("log");
-                log.innerHTML += `${latency}/ms ` + "<br>";
+                log.innerHTML += `${latency}/ms ${new Date().toLocaleTimeString()} ` + "<br>";
                 cn.scrollTo({
                     top:
                     cn.scrollHeight, behavior: "smooth"
