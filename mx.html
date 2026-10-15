@@ -144,18 +144,18 @@
 
                 if (latency < 50) {
                     document.body.style.color = "#0f0";
-                    document.getElementById("rep").innerText = "Votre connexion est rapide."
+                    document.getElementById("rep").innerText = "Votre connexion est rapide. 👍"
                     document.getElementById("rep").style.color = "white"
                     log.style.color = "white"
                 } else if (latency < 150) {
                     document.body.style.color = "#ff0";
-                    document.getElementById("rep").innerText = "Connexion assez lente."
+                    document.getElementById("rep").innerText = "Connexion assez lente. 🐢"
                     document.getElementById("rep").style.color = "orange"
                     log.style.color = "orange"
                    document.getElementById("enre").innerHTML += "Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
                 } else {
                     document.body.style.color = "#f00";
-                    document.getElementById("rep").innerText = "Vérifiez votre réseaux, car la réponse est lente."
+                    document.getElementById("rep").innerText = "Vérifiez votre réseaux, car la réponse est lente. ❌"
                     document.getElementById("rep").style.color = "red"
                     log.style.color = "red"
                     document.getElementById("enre").innerHTML += "Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
