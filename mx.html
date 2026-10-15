@@ -63,6 +63,9 @@
     </style>
 </head>
 <body>
+    <center>
+        <h2 id="rep"></h2>
+    </center>
 
     <div id="result">
         <div class="label">Temps de réponse entre<br> vous et internet.</div>
@@ -98,10 +101,19 @@
 
                 if (latency < 50) {
                     document.body.style.color = "#0f0";
+                    document.getElementById("rep").innerText = "Rapide"
+                    document.getElementById("rep").style.color = "white"
+                    log.style.color = "white"
                 } else if (latency < 150) {
                     document.body.style.color = "#ff0";
+                    document.getElementById("rep").innerText = "Moyen"
+                    document.getElementById("rep").style.color = "orange"
+                    log.style.color = "orange"
                 } else {
                     document.body.style.color = "#f00";
+                    document.getElementById("rep").innerText = "Trop lent"
+                    document.getElementById("rep").style.color = "red"
+                    log.style.color = "red"
                 }
 
             } catch (e) {
