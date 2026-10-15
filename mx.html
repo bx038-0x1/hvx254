@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  <style>
+    body{
+      margin: 30;
+    }
+  </style>
+  <h2 id="pg"></h2>
+  <h2 id="x"></h2>
+  <script>
+    let pg = document.getElementById("pg");
+    let x = document.getElementById("x");
+    if('connection' in navigator){
+      pg.innerHTML = "Connexion: " + navigator.connection.rtt + "ms";
+      x.innerHTML = "Type: " + navigator.connection.effectiveType;
+      
+    }
+  </script>
+</body>
+</html>
