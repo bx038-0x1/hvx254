@@ -135,7 +135,7 @@
                     document.getElementById("rep").innerText = "Connexion assez lente."
                     document.getElementById("rep").style.color = "orange"
                     log.style.color = "orange"
-                    document.getElementById("enre").innerText += "Pic de plus de 150/ms a " + `${new Date().toLocaleTimeString()}`
+                    document.getElementById("enre").innerHTML += "Pic de plus de 150/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
                 } else {
                     document.body.style.color = "#f00";
                     document.getElementById("rep").innerText = "Vérifiez votre réseaux, car la réponse est lente."
