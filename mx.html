@@ -47,7 +47,7 @@
     <div id="result">
         <div class="label">Temps de réponse</div>
         <span id="ms-val">Calcul en cours...</span>
-        <div class="cn">
+        <div class="cn" id="cn">
             <span id="log"></span>
         </div>
     </div>
@@ -66,12 +66,12 @@
 
                 document.getElementById("ms-val").innerText =
                     `${latency}/ms`;
-
+                const cn = document.getElementById("cn");
                 const log = document.getElementById("log");
                 log.innerHTML += `${latency}/ms ` + "<br>";
                 window.scrollTo({
                     top:
-                    document.body.scrollHeight, behavior: "smooth"
+                    cn.scrollHeight, behavior: "smooth"
                 });
 
                 if (latency < 50) {
