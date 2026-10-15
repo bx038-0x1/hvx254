@@ -30,9 +30,6 @@
     <div id="result">
         <div class="label">Temp de réponse</div>
         <span id="ms-val">Calcul en cours...</span>
-        <br>
-            <br>
-                <div style="border: solid 2px white; border-radius: 6px; color: white; padding: 10px 19px; overflow-y: auto;"><span id="log"></span></div>
     </div>
     
 
@@ -49,8 +46,6 @@
                 
                 document.getElementById('ms-val').innerText = latency + "/ms";
                 if(latency < 50) document.body.style.color = "#FFF";
-                let log = document.getElementById("log");
-                log.innerHTML += latency;
                 else if(latency < 150) document.body.style.color = "#ff0"; document.
                 else document.body.style.color = "#f00";
 
