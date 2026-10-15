@@ -21,7 +21,7 @@
         }
         .label {
             font-size: 1rem;
-            color: #666;
+            color: #333;
         }
     </style>
 </head>
@@ -41,14 +41,14 @@
                 await fetch('https://www.cloudflare.com/cdn-cgi/trace');
                 
                 const end = performance.now();
-                const latency = Math.round(end - start); // Fin du chronomètre
+                const latency = Math.round(end - start);
                 
-                document.getElementById('ms-val').innerText = latency + " ms";
+                document.getElementById('ms-val').innerText = latency + "/ms";
                 
                 // Couleur selon la vitesse
-                if(latency < 50) document.body.style.color = "#0f0"; // Vert
-                else if(latency < 150) document.body.style.color = "#ff0"; // Jaune
-                else document.body.style.color = "#f00"; // Rouge
+                if(latency < 50) document.body.style.color = "#000";
+                else if(latency < 150) document.body.style.color = "#ff0";
+                else document.body.style.color = "#f00";
 
             } catch (e) {
                 document.getElementById('ms-val').innerText = "Erreur";
@@ -58,8 +58,8 @@
         // Lance le test immédiatement
         testSpeed();
 
-        // Rafraîchit toutes les 2 secondes pour voir les variations en temps réel
-        setInterval(testSpeed, 2000);
+        
+        setInterval(testSpeed, 500);
     </script>
 
 </body>
