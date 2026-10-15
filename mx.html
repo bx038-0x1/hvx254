@@ -35,8 +35,8 @@
             border: solid 2px white;
             border-radius: 4px;
             margin-top: 20px;
-            max-width: 20vw;
-            max-height: 30px;
+            max-width: 28vw;
+            max-height: 50px;
             font-size: 1rem;
             word-wrap: break-word;
         }
@@ -69,6 +69,10 @@
 
                 const log = document.getElementById("log");
                 log.innerHTML += `${latency}/ms ` + "<br>";
+                window.scrollTo({
+                    top:
+                    document.body.scrollHeight, behavior: "smooth"
+                });
 
                 if (latency < 50) {
                     document.body.style.color = "#0f0";
