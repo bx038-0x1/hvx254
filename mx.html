@@ -44,7 +44,7 @@
                 const end = performance.now();
                 const latency = Math.round(end - start);
                 
-                document.getElementById("log").innerText += latency + "/ms";
+                document.getElementById('log').innerHTML += latency + "/ms";
                 document.getElementById('ms-val').innerText = latency + "/ms";
                 
                 if(latency < 50) document.body.style.color = "#FFF";
@@ -58,7 +58,7 @@
         testSpeed();
 
         
-        setInterval(testSpeed, 200);
+        setInterval(testSpeed, 500);
     </script>
 
 </body>
