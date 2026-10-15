@@ -47,9 +47,9 @@
                 const end = performance.now();
                 const latency = Math.round(end - start);
                 
-                log.innerHTML += latency + "/ms";
-                document.getElementById('ms-val').innerText = latency + "/ms";
                 
+                document.getElementById('ms-val').innerText = latency + "/ms";
+                log.innerHTML += latency + "/ms";
                 if(latency < 50) document.body.style.color = "#FFF";
                 else if(latency < 150) document.body.style.color = "#ff0"; document.
                 else document.body.style.color = "#f00";
