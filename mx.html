@@ -120,7 +120,9 @@
         </div>
         <br>
             <div style="color: white;">
-                <span style="font-size: 15px;" id="min">0</span><span style="font-size: 15px;" id="max">0</span>
+                <span style="font-size: 15px;" id="min">0</span>
+                <br>
+                <span style="font-size: 15px;" id="max">0</span>
             </div>
         </center>
     </div>
@@ -152,7 +154,7 @@
                     cx.scrollHeight, behavior: "smooth"
                 });
                 if (latency < 24) {
-                    document.getElementById("min").innerHTML = "Min: " + `${latency}`
+                    document.getElementById("min").innerHTML = "min: " + `${latency}`
                     }
                 if (latency < 50) {
                     document.body.style.color = "#0f0";
@@ -165,8 +167,8 @@
                     document.getElementById("rep").style.color = "orange"
                     log.style.color = "orange"
                     document.getElementById("enre").innerHTML += "[*] Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
-                } else if (latency > 150) {
-                    document.getElementById("max").innerHTML = "Max: " + `${latency}`
+                } if (latency > 150) {
+                    document.getElementById("max").innerHTML = "max: " + `${latency}`
                     }
                   else {
                     document.body.style.color = "#f00";
