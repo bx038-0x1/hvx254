@@ -120,7 +120,7 @@
         </div>
         <br>
             <div style="display: flex; color: white;">
-                <span id="min">en cours de recup...</span><span id="max">en cours de recup...</span>
+                <span style="font-size: 15px;" id="min">en cours de recup...</span><span style="font-size: 15px;" id="max">en cours de recup...</span>
             </div>
         </center>
     </div>
@@ -171,7 +171,7 @@
                     document.getElementById("rep").style.color = "red"
                     log.style.color = "red"
                     document.getElementById("enre").innerHTML += "Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
-                    document.getElementById("min").innerText = "Max: " + `${latency}`
+                    document.getElementById("max").innerText = "Max: " + `${latency}`
                 }
 
             } catch (e) {
