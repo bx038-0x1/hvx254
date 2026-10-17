@@ -138,7 +138,7 @@
                 const cn = document.getElementById("cn");
                 const cx = document.getElementById("cx");
                 const log = document.getElementById("log");
-                log.innerHTML += `${latency}/ms ${new Date().toLocaleTimeString()} ` + "<br>";
+                log.innerHTML += "[*] " + `${latency}/ms ${new Date().toLocaleTimeString()} ` + " [*]" + "<br>";
                 cn.scrollTo({
                     top:
                     cn.scrollHeight, behavior: "smooth"
