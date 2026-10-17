@@ -108,7 +108,7 @@
 
     <div id="result">
         <div class="label">Temp de réponse entre<br> vous et internet.</div>
-        <span id="ms-val">Calcul en cours...</span>
+        <span id="ms-val">calcul...</span>
         <center>
         <div class="cn" id="cn">
             <span id="log"></span>
@@ -116,11 +116,11 @@
         <hr>
         <p style="color: red; font-size: 15px;">Tableau d'alertes</p>
         <div class="cx" id="cx">
-            <span id="enre">Rien pour l instant.</span>
+            <span id="enre">[*] Rien pour l instant.</span>
         </div>
         <br>
             <div style="color: white;">
-                <span style="font-size: 15px;" id="min"></span><span style="font-size: 15px;" id="max"></span>
+                <span style="font-size: 15px;" id="min">0</span><span style="font-size: 15px;" id="max">0</span>
             </div>
         </center>
     </div>
@@ -164,7 +164,7 @@
                     document.getElementById("rep").innerText = "Connexion assez lente. :/"
                     document.getElementById("rep").style.color = "orange"
                     log.style.color = "orange"
-                    document.getElementById("enre").innerHTML += "Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
+                    document.getElementById("enre").innerHTML += "[*] Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
                 } else if (latency > 150) {
                     document.getElementById("max").innerHTML = "Max: " + `${latency}`
                     }
@@ -173,11 +173,11 @@
                     document.getElementById("rep").innerText = "Vérifiez votre réseaux, car la réponse est lente. x("
                     document.getElementById("rep").style.color = "red"
                     log.style.color = "red"
-                    document.getElementById("enre").innerHTML += "Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
+                    document.getElementById("enre").innerHTML += "[*] Pic de " + `${latency}` + "/ms a " + `${new Date().toLocaleTimeString()}` + "<br>"
                 }
 
             } catch (e) {
-                document.getElementById("ms-val").innerText = "Erreur";
+                document.getElementById("ms-val").innerText = "[!] erreur [!]";
                 console.error(e);
             }
         }
