@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture Loi</title>
+    <style>
+        body { background: black; color: white; font-family: Arial; padding: 20px; }
+        button { background: transparent; color: red; border: 1px solid red; padding: 5px 10px; cursor: pointer; }
+        #resultat { margin-top: 20px; line-height: 1.6; white-space: pre-wrap; max-width: 800px; }
+        .err { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Article L. 225-1 du Code Pénal</h1>
+    <button onclick="charger()">Charger</button>
+    <div id="resultat"></div>
+
+    <script>
+        function charger() {
+            const div = document.getElementById("resultat");
+            div.innerHTML = "Chargement...";
+
+            // URL de l'article spécifique
+            const urlLegifrance = "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038382940";
+            
+            // On passe par un proxy CORS car Legifrance bloque les accès directs depuis un navigateur
+            const urlProxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(urlLegifrance)}`;
+
+            fetch(urlProxy)
+                .then(res => res.text())
+                .then(html => {
+                    // Création d'un faux DOM pour extraire le texte proprement
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // Méthode robuste : on cherche le premier paragraphe significatif ou on nettoie le body
+                    // Sur Legifrance, le texte est souvent dans des balises <p> à l'intérieur d'une classe principale.
+                    // Ici, on prend tout le texte visible du body après avoir retiré les éléments inutiles.
+                    
+                    // Suppression des scripts et styles pour éviter le bruit
+                    doc.querySelectorAll('script, style, nav, header, footer').forEach(el => el.remove());
+                    
+                    // Extraction du texte brut
+                    const texte = doc.body.innerText;
+                    
+                    if (texte.trim().length > 0) {
+                        div.textContent = texte;
+                    } else {
+                        div.innerHTML = "<span class='err'>Aucun texte trouvé.</span>";
+                    }
+                })
+                .catch(err => {
+                    div.innerHTML = `<span class='err'>Erreur : ${err.message}</span>`;
+                });
+        }
+    </script>
+</body>
+</html>
