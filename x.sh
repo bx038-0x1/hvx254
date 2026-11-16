@@ -100,4 +100,4 @@ pkg install sed
 
 pkg install awk
 
-echo "Dependencies installed."
+echo "installer"
