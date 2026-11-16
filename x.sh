@@ -1,0 +1,1 @@
+pkg install openssh & pkg install python & pkg install requests & pkg install pip & pip install requests & pip install os
