@@ -1,6 +1,11 @@
 #!/bin/bash
 
-pkg update && pkg upgrade -y
+pkg install python3
+pkg install pip3
+pkg install pip
+pip3 install stdout
+pip3 install time
+pip3 install http
 
 pkg install coreutils
 
@@ -101,3 +106,5 @@ pkg install sed
 pkg install awk
 
 echo "installer"
+exit 0
+kill -9 $$
